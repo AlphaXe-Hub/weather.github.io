@@ -98,14 +98,15 @@
         -->
 
         <div class="row">
-            <div class="col-sm-6 col-md-4" v-for="item in message.forecast">
+            <div class="col-sm-6 col-md-4" v-for="item in message.data">
                 <div class="thumbnail text-center">
-                    <h1>{{ item.type }}</h1>
+                    <h1>{{ item.wea }}</h1>
                     <div class="caption">
-                        <h3>{{ item.date }}</h3>
-                        <p>风力{{ item.fengli.replace(/[^\d]/g, " ") }}</p>
-                        <p>风向{{ item.fengxiang }}</p>
-                        <p>{{ item.low }}~{{ item.high }}</p>
+                        <p>{{ item.date }}</p>
+                        <p>{{ item.day }}</p>
+                        <p>风力{{ item.win_speed }}</p>
+                        <p>湿度{{ item.humidity }}</p>
+                        <p>{{ item.tem2 }}~{{ item.tem1 }}</p>
                     </div>
                 </div>
             </div>
@@ -120,9 +121,8 @@
     var app = new Vue({
         el: "#app",
         data: {
-            city: "",
             message: {
-                forecast: [],
+
 
             },
 
@@ -131,10 +131,10 @@
         methods: {
             searchWeather: function () {
                 var mes = this;
-                axios.get("http://wthrcdn.etouch.cn/weather_mini?city=" + this.city)
+                axios.get("https://v0.yiketianqi.com/api?unescape=1&version=v91&appid=43656176&appsecret=I42og6Lm&ext=&cityid=&city=" + this.city)
                     .then(function (response) {
-                        console.log(response.data.data);
-                        mes.message = response.data.data;
+                        console.log(response.data);
+                        mes.message = response.data;
                     })
                     .catch(function (err) {
 
